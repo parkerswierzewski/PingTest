@@ -1,1 +1,3 @@
 # PingTest
+
+The PingTest is a bash script will run on your local machine and help determine network connectivity issues (Linux Only!). It will first attempt to see if there is a default gateway (router) configured on the machine. If there is a default gateway configured it will attempt to ping the gateway to verify a successful connection between the two machines. After a successful connection to the default gateway it will attempt to ping a remote host hard-coded as 8.8.8.8. Finally, the script will check Domain Name System (DNS) resoultion and attempt to ping google.com. If at any point the program fails it will stop immediately stating what the program is.
