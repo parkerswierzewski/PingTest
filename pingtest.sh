@@ -1,62 +1,73 @@
-#!/bin/bash
-# Parker Swierzewski
-# NSSA221 Scripting Assignment 01
-# Ping Test
+!/bin/bash
+# 
+# Ping Test v2.0
+#
+# author: Parker Swierzewski
+# language: Bash Script
+# desc: This script will determine the cause of connection issues. 
+# 
 
 RED=`tput setaf 1`
+GREEN=`tput setaf 2`
 BLUE=`tput setaf 4`
 NC=`tput sgr0`
 
-# Gets the default gateway from the ip route command and stores it in a variable.
-gateway_address=$(ip route | grep default | awk '{print $3}')
+# Obtains the default gateway
+gateway=$(ip route | grep default | awk '{print $3}')
 
 clear
 echo "*** The Ping Test is beginning now! ***"
 echo ""
 
-if [ "$gateway_address" == ''  ]
+if [ "$gateway" == ''  ]
 then
 	echo "Connection to the default gateway ${RED}FAILED${NC}!"
+	echo "You do not have a default gateway (router) configured!"
 	exit 1
 else
-	echo "The default gateway is ${RED}$gateway_address${NC}!"
+	echo "The default gateway is ${BLUE}$gateway${NC}!"
 fi
 
 echo ""
 
-# Checks connection to the default gateway.
-ping -c 1 -t 2 $gateway_address > /dev/null
+# Verifies connection to the default gateway.
+ping -c 1 -t 2 $gateway > /dev/null
 if [ "$?" -eq 0 ]
 then
-	echo "Connection to the default gateway ${BLUE}SUCCEDED${NC}!"
+	echo "Connection to the default gateway ${GREEN}SUCCEEDED${NC}!"
 else
 	echo "Connection to the default gateway ${RED}FAILED${NC}!"
+	echo "The default gateway (router) isn't correct!"
+	echo "Make sure it's configured properly."
 	exit 1
 fi
 
 echo ""
 
-# Checks the connection to a remote IP address.
+# Verifies remote connection is working properly.
 ping -c 1 8.8.8.8 > /dev/null
 if [ "$?" -eq 1 ]
 then
 	echo "Remote Connection ${RED}FAILED${NC}!"
 	exit 1
 else
-	echo "Remote Connection ${BLUE}SUCCEDED${NC}!"
+	echo "Remote Connection ${GREEN}SUCCEEDED${NC}!"
 fi
 
 echo ""
 
-# Checks to see if the DNS resolution is working (In this case Google as well).
+# Verifies DNS resolution is working properly.
 ping -c 1 google.com > /dev/null
 if [ "$?" -eq 2 ]
 then
 	echo "DNS Connection ${RED}FAILED${NC}!"
+	echo "It's always DNS :)"
 	exit 1
 else
-	echo "DNS Connection ${BLUE}SUCCEDED${NC}!"
+	echo "DNS Connection ${GREEN}SUCCEEDED${NC}!"
 fi
 
 echo ""
+echo "${GREEN}Everything should be working properly${NC}!"
+echo""
 echo "*** Test Completed ***"
