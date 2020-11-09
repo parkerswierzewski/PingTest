@@ -19,7 +19,7 @@ clear
 echo "*** The Ping Test is beginning now! ***"
 echo ""
 
-if [ "$gateway" == ''  ]
+if [ "$gateway" == '' ]
 then
 	echo "Connection to the default gateway ${RED}FAILED${NC}!"
 	echo "You do not have a default gateway (router) configured!"
@@ -69,5 +69,5 @@ fi
 
 echo ""
 echo "${GREEN}Everything should be working properly${NC}!"
-echo""
+echo ""
 echo "*** Test Completed ***"
